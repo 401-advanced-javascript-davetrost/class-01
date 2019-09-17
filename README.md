@@ -10,7 +10,7 @@
 * [front-end-web-server](https://career-track-class-01-dave.herokuapp.com/)
 
 #### Documentation
-* [jsdoc](http://xyz.com) (Not working from heroku)
+* [jsdoc](https://career-track-class-01-dave.herokuapp.com/docs/)
 
 ### Setup
 #### `.env` requirements
