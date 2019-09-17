@@ -8,7 +8,7 @@
     "lint": "eslint \"**/*.js\"",
     "test": "jest --verbose --coverage",
     "test-watch": "jest --watchAll --verbose --coverage",
-    "jsdoc": "jsdoc -c ./docs/config/jsdoc.config.json"    
+    "jsdoc": "jsdoc -c ./docs/config/jsdoc.config.json"
   },
   "author": "",
   "license": "ISC",
@@ -18,5 +18,9 @@
     "eslint-plugin-react": "^7.14.3",
     "jest": "^24.8.0",
     "jsdoc": "^3.6.3"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "node": "^12.10.0"
   }
 }
