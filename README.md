@@ -5,21 +5,21 @@
 ### Author: Dave Trost
 
 ### Links and Resources
-* [submission PR](http://xyz.com)
-* [travis](http://xyz.com)
+* [submission PR](https://github.com/401-advanced-javascript-davetrost/class-01/pull/1)
+* [travis](https://travis-ci.com/401-advanced-javascript-davetrost/class-01)
 
 #### Documentation
-* [jsdoc](http://xyz.com) (Server assignments)
+* [jsdoc](http://xyz.com) (Not working from heroku)
 
 ### Setup
 #### `.env` requirements
 * [env example](.env.example)
 
 #### Running the app
-  `npm start` - starts the server on port 3000
+* N/A
 
 #### Tests
-  `npm test` - to run all the tests in jest
+* `npm test` - to run all the tests in jest
 
 #### UML
-N/A
+* N/A
