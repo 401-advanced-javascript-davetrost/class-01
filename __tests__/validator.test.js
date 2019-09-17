@@ -2,16 +2,16 @@
 
 const validator = require('../lib/validator.js');
 
+const str = 'yes';
+const num = 1;
+const arr = ['a'];
+const obj = {x:'y'};
+const func = () => {};
+const bool = false;
+
 describe('validator module performs basic validation of', () => {
 
   // TODO: Make this series of tests less repetitive ... DRY it out
-
-  const str = 'yes';
-  const num = 1;
-  const arr = ['a'];
-  const obj = {x:'y'};
-  const func = () => {};
-  const bool = false;
 
   it('strings', () => {
     expect(validator.isString(str)).toBeTruthy();
@@ -20,6 +20,13 @@ describe('validator module performs basic validation of', () => {
     expect(validator.isString(obj)).toBeFalsy();
     expect(validator.isString(func)).toBeFalsy();
     expect(validator.isString(bool)).toBeFalsy();
+    const rules = 'string';
+    expect(validator.isValid(str, rules)).toBeTruthy();
+    expect(validator.isValid(num, rules)).toBeFalsy();
+    expect(validator.isValid(arr, rules)).toBeFalsy();
+    expect(validator.isValid(obj, rules)).toBeFalsy();
+    expect(validator.isValid(func, rules)).toBeFalsy();
+    expect(validator.isValid(bool, rules)).toBeFalsy();
   });
 
   it('numbers', () => {
@@ -29,6 +36,13 @@ describe('validator module performs basic validation of', () => {
     expect(validator.isNumber(obj)).toBeFalsy();
     expect(validator.isNumber(func)).toBeFalsy();
     expect(validator.isNumber(bool)).toBeFalsy();
+    const rules = 'number';
+    expect(validator.isValid(str, rules)).toBeFalsy();
+    expect(validator.isValid(num, rules)).toBeTruthy();
+    expect(validator.isValid(arr, rules)).toBeFalsy();
+    expect(validator.isValid(obj, rules)).toBeFalsy();
+    expect(validator.isValid(func, rules)).toBeFalsy();
+    expect(validator.isValid(bool, rules)).toBeFalsy();
   });
 
   it('arrays', () => {
@@ -69,24 +83,66 @@ describe('validator module performs basic validation of', () => {
 
 });
 
-describe.skip('validator module performs complex validations', () => {
+describe('validator module performs complex validations', () => {
 
-  it('validates the presence of required object properties at any level', () => {
+  it.skip('validates the presence of required object properties at any level, and it validates the proper types of object properties', () => {
     // i.e. does person.hair.color exist and have a good value, not just person.hair
-    expect(true).toBeFalsy();
-  });
-
-  it('validates the proper types of object properties', () => {
     // i.e. person.name must be a string, etc.
-    expect(true).toBeFalsy();
+    const rules = {
+      person: {
+        hair: {
+          color: 'string',
+          length: 'number',
+        },
+      },
+    };
+    const input = {
+      person: {
+        hair: {
+          color: 'brown',
+          length: 0.2,
+        },
+      },
+    };
+    expect(validator.isValid(input, rules)).toBeTruthy();
   });
 
   it('validates the types of values contained in an array', () => {
-    // i.e. an array of all strings or numbers
-    expect(true).toBeFalsy();
+    const rules = {
+      arrayOf: 'string',
+    };
+    expect(validator.isValid(['abc', 'def', 'ghi', 'jkl'], rules)).toBeTruthy();
+    expect(validator.isValid([], rules)).toBeTruthy();
+    expect(validator.isValid(['abc', true, 'ghi', 'jkl'], rules)).toBeFalsy();
+    expect(validator.isValid(['abc', 'def', 'ghi', 123], rules)).toBeFalsy();
+    expect(validator.isValid([func, 'def', 'ghi', 'jkl'], rules)).toBeFalsy();
   });
 
-  it('validates a value array against an approved list', () => {
+  it.skip('validates the types of objects contained in an array of objects', () => {
+    const rules = {
+      arrayOf: {
+        stats: { arrayOf: 'number' },
+        name: 'string',
+      },
+    };
+    const arrayOfObjects = [
+      {
+        stats: [1, 2, 3],
+        name: 'dave',
+      },
+      {
+        stats: [4, 5],
+        name: str,
+      },
+      {
+        stats: [1.1, 2.2, -3.2],
+        name: 'dave' + str,
+      },
+    ];
+    expect(validator.isValid(arrayOfObjects, rules)).toBeTruthy();
+  });
+
+  it.skip('validates a value array against an approved list', () => {
     // i.e. a string might only be allowed to be "yes" or "no"
     expect(true).toBeFalsy();
   });
