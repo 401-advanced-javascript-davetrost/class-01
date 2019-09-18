@@ -3,32 +3,94 @@
 const validator = require('../lib/validator');
 const {CastError, ModelError} = require('../lib/Errors');
 
-describe.skip('validator module provides type casting lookup of', () => {
-  it('strings', () => expect(validator.getCaster('string')).toBe(validator.castString));
-  it('numbers', () => expect(validator.getCaster('number')).toBe(validator.castNumber));
-  it('boolean', () => expect(validator.getCaster('boolean')).toBe(validator.castBoolean));
-  it('date', () => expect(validator.getCaster('date')).toBe(validator.castDate));
-  it('array', () => expect(validator.getCaster('array')).toBe(validator.castArray));
-});
-
-const str = 'yes';
+const randomStr = 'yes';
+const trueStr = 'true';
+const numStr = '123';
+const negNumStr = '-0.123';
 const emptyStr = '';
 const number = 42;
+const zeroNumber = 0;
+const oneNumber = 1;
 const bool = true;
 const obj = {};
 const date = new Date();
 
 describe('validator module performs type casting of', () => {
-  const Caster = validator.getCaster('string');
-  it('String from str', () => expect(Caster(str)).toBe(str));
-  it('String from emptyStr', () => expect(Caster(emptyStr)).toBe(emptyStr));
-  it.skip('String from number', () => expect(Caster(number)).toBe(`${number}`));
-  it.skip('String from bool', () => expect(Caster(bool)).toThrow(CastError));
-  it.skip('String from obj', () => expect(Caster(obj)).toThrow(CastError));
-  it.skip('String from date', () => expect(Caster(date)).toThrow(CastError));
+  describe('Strings', () => {
+    const Caster = validator.getCaster('string');
+    it('from randomStr', () => {
+      expect(Caster(randomStr)).toBe(randomStr);
+    });
+    it('from trueStr', () => {
+      expect(Caster(trueStr)).toBe(trueStr);
+    });
+    it('from numStr', () => {
+      expect(Caster(numStr)).toBe(numStr);
+    });
+    it('from negNumStr', () => {
+      expect(Caster(negNumStr)).toBe(negNumStr);
+    });
+    it('from emptyStr', () => {
+      expect(Caster(emptyStr)).toBe(emptyStr);
+    });
+    it('from number', () => {
+      expect(Caster(number)).toBe(`${number}`);
+    });
+    it('from zeroNumber', () => {
+      expect(Caster(zeroNumber)).toBe(`${zeroNumber}`);
+    });
+    it('from oneNumber', () => {
+      expect(Caster(oneNumber)).toBe(`${oneNumber}`);
+    });
+    it('from bool', () => {
+      expect(() => Caster(bool)).toThrow(CastError);
+    });
+    it('from obj', () => {
+      expect(() => Caster(obj)).toThrow(CastError);
+    });
+    it('from date', () => {
+      expect(() => Caster(date)).toThrow(CastError);
+    });
+  });
+  describe('Booleans', () => {
+    const Caster = validator.getCaster('boolean');
+    it('from randomStr', () => {
+      expect(() => Caster(randomStr)).toThrow(CastError);
+    });
+    it('from trueStr', () => {
+      expect(() => Caster(trueStr)).toBe(true);
+    });
+    it('from numStr', () => {
+      expect(() => Caster(numStr)).toThrow(CastError);
+    });
+    it('from negNumStr', () => {
+      expect(() => Caster(negNumStr)).toThrow(CastError);
+    });
+    it('from emptyStr', () => {
+      expect(() => Caster(emptyStr)).toThrow(CastError);
+    });
+    it('from number', () => {
+      expect(() => Caster(number)).toThrow(CastError);
+    });
+    it('from zeroNumber', () => {
+      expect(() => Caster(zeroNumber)).toBe(false);
+    });
+    it('from oneNumber', () => {
+      expect(() => Caster(oneNumber)).toBe(true);
+    });
+    it('from bool', () => {
+      expect(() => Caster(bool)).toBe(true);
+    });
+    it('from obj', () => {
+      expect(() => Caster(obj)).toThrow(CastError);
+    });
+    it('from date', () => {
+      expect(() => Caster(date)).toThrow(CastError);
+    });
+  });
 });
 
-describe.skip('validator module performs basic validation of', () => {
+describe('validator module performs basic validation of', () => {
   const str = 'yes';
   const num = 1;
   const arr = ['a'];
@@ -116,49 +178,4 @@ describe.skip('validator module performs array validation of', () => {
   it('booleans', () => {
   
   });
-});
-
-describe.skip('validator module gets validator for', () => {
-
-  it('strings', () => {
-    // TODO: pass getValidator the rules
-    expect(validator.getValidator(/* rules */)).toBe(validator.isString);
-  });
-  
-  it('numbers', () => {
-    
-  });
-
-  it('arrays', () => {
-    
-  });
-
-  it('objects', () => {
-    
-  });
-
-  it('booleans', () => {
-    
-  });
-
-  it('functions', () => {
-    
-  });
-
-  it('array of strings', () => {
-    
-  });
-
-  it('array of numbers', () => {
-    
-  });
-
-  it('array of objects', () => {
-    
-  });
-
-  it('array of booleans', () => {
-    
-  });
-
 });
