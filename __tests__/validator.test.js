@@ -58,7 +58,7 @@ describe('validator module performs type casting of', () => {
       expect(() => Caster(randomStr)).toThrow(CastError);
     });
     it('from trueStr', () => {
-      expect(() => Caster(trueStr)).toBe(true);
+      expect(Caster(trueStr)).toBe(true);
     });
     it('from numStr', () => {
       expect(() => Caster(numStr)).toThrow(CastError);
@@ -73,13 +73,13 @@ describe('validator module performs type casting of', () => {
       expect(() => Caster(number)).toThrow(CastError);
     });
     it('from zeroNumber', () => {
-      expect(() => Caster(zeroNumber)).toBe(false);
+      expect(Caster(zeroNumber)).toBe(false);
     });
     it('from oneNumber', () => {
-      expect(() => Caster(oneNumber)).toBe(true);
+      expect(Caster(oneNumber)).toBe(true);
     });
     it('from bool', () => {
-      expect(() => Caster(bool)).toBe(true);
+      expect(Caster(bool)).toBe(true);
     });
     it('from obj', () => {
       expect(() => Caster(obj)).toThrow(CastError);
