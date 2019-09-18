@@ -52,6 +52,42 @@ describe('validator module performs type casting of', () => {
       expect(() => Caster(date)).toThrow(CastError);
     });
   });
+  describe('Numbers', () => {
+    const Caster = validator.getCaster('number');
+    it('from randomStr', () => {
+      expect(() => Caster(randomStr)).toThrow(CastError);
+    });
+    it('from trueStr', () => {
+      expect(() => Caster(trueStr)).toThrow(CastError);
+    });
+    it('from numStr', () => {
+      expect(Caster(numStr)).toBe(+numStr);
+    });
+    it('from negNumStr', () => {
+      expect(Caster(negNumStr)).toBe(+negNumStr);
+    });
+    it('from emptyStr', () => {
+      expect(() => Caster(emptyStr)).toThrow(CastError);
+    });
+    it('from number', () => {
+      expect(Caster(number)).toBe(number);
+    });
+    it('from zeroNumber', () => {
+      expect(Caster(zeroNumber)).toBe(zeroNumber);
+    });
+    it('from oneNumber', () => {
+      expect(Caster(oneNumber)).toBe(oneNumber);
+    });
+    it('from bool', () => {
+      expect(() => Caster(bool)).toThrow(CastError);
+    });
+    it('from obj', () => {
+      expect(() => Caster(obj)).toThrow(CastError);
+    });
+    it('from date', () => {
+      expect(() => Caster(date)).toThrow(CastError);
+    });
+  });
   describe('Booleans', () => {
     const Caster = validator.getCaster('boolean');
     it('from randomStr', () => {
