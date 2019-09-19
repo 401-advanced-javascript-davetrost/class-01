@@ -1,8 +1,17 @@
 const DocumentCollection = require('./lib/document-collection');
-
 const documents = new DocumentCollection('./document-collection');
 
-const jsonObject = { 'name':'John', 'age':30, 'car':null };
+let jsonObject = { 'name':'Josh', 'age':36, 'hair':true };
+documents.save(jsonObject)
+  .then(object => {
+    console.log('save( object ) =', object);
+    return object;
+  })
+  .catch(err => {
+    console.log('caught error:', err);
+  });
+
+jsonObject = { 'name':'Joey', 'age':46, 'goofy':true };
 documents.save(jsonObject)
   .then(object => {
     console.log('save( object ) =', object);
@@ -14,7 +23,9 @@ documents.save(jsonObject)
         console.log('get(', object.id, ') = ', content);
         return content;
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+      });
   })
   .catch(err => {
     console.log(err);
