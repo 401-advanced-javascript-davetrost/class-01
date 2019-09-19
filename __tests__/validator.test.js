@@ -14,6 +14,9 @@ const oneNumber = 1;
 const bool = true;
 const obj = {};
 const date = new Date();
+const dateStr1 = date.toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' });
+const dateStr2 = date.toLocaleDateString(undefined, { month: 'numeric', day: 'numeric', year: 'numeric' });
+const dateStr3 = date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
 
 describe('validator module performs type casting of', () => {
   describe('Strings', () => {
@@ -124,6 +127,51 @@ describe('validator module performs type casting of', () => {
       expect(() => Caster(date)).toThrow(CastError);
     });
   });
+  describe('Dates', () => {
+    const Caster = validator.getCaster('date');
+    it('from randomStr', () => {
+      expect(() => Caster(randomStr)).toThrow(CastError);
+    });
+    it('from trueStr', () => {
+      expect(() => Caster(trueStr)).toThrow(CastError);
+    });
+    it('from numStr', () => {
+      expect(() => Caster(numStr)).toThrow(CastError);
+    });
+    it('from negNumStr', () => {
+      expect(() => Caster(negNumStr)).toThrow(CastError);
+    });
+    it('from emptyStr', () => {
+      expect(() => Caster(emptyStr)).toThrow(CastError);
+    });
+    it('from number', () => {
+      expect(() => Caster(number)).toThrow(CastError);
+    });
+    it('from zeroNumber', () => {
+      expect(() => Caster(zeroNumber)).toThrow(CastError);
+    });
+    it('from oneNumber', () => {
+      expect(() => Caster(oneNumber)).toThrow(CastError);
+    });
+    it('from bool', () => {
+      expect(() => Caster(bool)).toThrow(CastError);
+    });
+    it('from obj', () => {
+      expect(() => Caster(obj)).toThrow(CastError);
+    });
+    it('from date', () => {
+      expect(Caster(date)).toBe(date);
+    });
+    it('from dateStr1', () => {
+      expect(Caster(dateStr1)).toBe(dateStr1);
+    });
+    it('from dateStr2', () => {
+      expect(Caster(dateStr2)).toBe(dateStr2);
+    });
+    it('from dateStr3', () => {
+      expect(Caster(dateStr3)).toBe(dateStr3);
+    });
+  });
 });
 
 describe('validator module performs basic validation of', () => {
@@ -133,6 +181,7 @@ describe('validator module performs basic validation of', () => {
   const obj = {x:'y'};
   const func = () => {};
   const bool = false;
+  const date = new Date;
 
   it('strings', () => {
     expect(validator.isString(str)).toBeTruthy();
@@ -141,6 +190,7 @@ describe('validator module performs basic validation of', () => {
     expect(validator.isString(obj)).toBeFalsy();
     expect(validator.isString(func)).toBeFalsy();
     expect(validator.isString(bool)).toBeFalsy();
+    expect(validator.isString(date)).toBeFalsy();
   });
 
   it('numbers', () => {
@@ -150,6 +200,7 @@ describe('validator module performs basic validation of', () => {
     expect(validator.isNumber(obj)).toBeFalsy();
     expect(validator.isNumber(func)).toBeFalsy();
     expect(validator.isNumber(bool)).toBeFalsy();
+    expect(validator.isNumber(date)).toBeFalsy();
   });
 
   it('arrays', () => {
@@ -159,6 +210,7 @@ describe('validator module performs basic validation of', () => {
     expect(validator.isArray(obj)).toBeFalsy();
     expect(validator.isArray(func)).toBeFalsy();
     expect(validator.isArray(bool)).toBeFalsy();
+    expect(validator.isArray(date)).toBeFalsy();
   });
 
   it('objects', () => {
@@ -168,6 +220,7 @@ describe('validator module performs basic validation of', () => {
     expect(validator.isObject(obj)).toBeTruthy();
     expect(validator.isObject(func)).toBeFalsy();
     expect(validator.isObject(bool)).toBeFalsy();
+    expect(validator.isObject(date)).toBeTruthy();
   });
 
   it('booleans', () => {
@@ -177,6 +230,7 @@ describe('validator module performs basic validation of', () => {
     expect(validator.isBoolean(obj)).toBeFalsy();
     expect(validator.isBoolean(func)).toBeFalsy();
     expect(validator.isBoolean(bool)).toBeTruthy();
+    expect(validator.isBoolean(date)).toBeFalsy();
   });
 
   it('functions', () => {
@@ -186,6 +240,16 @@ describe('validator module performs basic validation of', () => {
     expect(validator.isFunction(obj)).toBeFalsy();
     expect(validator.isFunction(func)).toBeTruthy();
     expect(validator.isFunction(bool)).toBeFalsy();
+    expect(validator.isFunction(date)).toBeFalsy();
+  });
+
+  it('dates', () => {
+    expect(validator.isDate(str)).toBeFalsy();
+    expect(validator.isDate(num)).toBeFalsy();
+    expect(validator.isDate(arr)).toBeFalsy();
+    expect(validator.isDate(obj)).toBeFalsy();
+    expect(validator.isDate(func)).toBeFalsy();
+    expect(validator.isDate(date)).toBeTruthy();
   });
 });
 
