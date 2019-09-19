@@ -1,13 +1,10 @@
 const Schema = require('../lib/Schema');
-const ModelError = require('../lib/Errors');
 
 describe('schema module performs validation for incoming data', () => {
 
   const personSchema = new Schema({
     firstName: 'string',
     lastName: 'string',
-    // hair: 'object',
-    //favoriteFoods: ['string'],
     married: 'boolean',
     kids: 'number',
   });
@@ -16,15 +13,6 @@ describe('schema module performs validation for incoming data', () => {
     const personModel = {
       firstName: 'Chris',
       lastName: 'Sample',
-      // hair: {
-      //   type: 'wavy',
-      //   color: 'brown',
-      // },
-      // favoriteFoods: [
-      //   'pizza',
-      //   'cupcakes',
-      //   'salmon',
-      // ],
       married: true,
       kids: 3,
     };
@@ -45,15 +33,6 @@ describe('schema module performs validation for incoming data', () => {
     const personModel = {
       firstName: 'Chris',
       lastName: 'Sample',
-      // hair: {
-      //   type: 'wavy',
-      //   color: 'brown',
-      // },
-      // favoriteFoods: [
-      //   'pizza',
-      //   'cupcakes',
-      //   'salmon',
-      // ],
       married: true,
       kids: 3,
     };
