@@ -6,26 +6,30 @@ jest.mock('../lib/files.js', () => ({
 
 const { readFile, writeFile, readdir } = require('../lib/files');
 
+const docsDir = './document-collection';
 const DocumentCollection = require('../lib/document-collection');
-const documents = new DocumentCollection('./document-collection');
+const documents = new DocumentCollection(docsDir);
 
 const jsonObject = { 'name':'Dave', 'age':39, 'scooter':null, 'bike':true };
+const jsonObjectMayChange = { 'name':'Dave', 'age':39, 'scooter':null, 'bike':true };
 const stringObject = JSON.stringify(jsonObject);
 const stringObjectParamsOnly = stringObject.slice(1, stringObject.length - 1);
+
+const testId = '123456';
 
 describe('Document Collection', () => {
   describe('Save Function', () => {
     it('Saves a file', () => {
       writeFile.mockResolvedValue(true);
       
-      return documents.save(jsonObject)
+      return documents.save(jsonObjectMayChange)
         .then(
           object => {
             delete object.id;
             expect(object).toEqual(jsonObject);
 
             expect(writeFile).toHaveBeenCalledTimes(1);
-            expect(writeFile.mock.calls[0][0]).toEqual(expect.stringContaining('./document-collection/'));
+            expect(writeFile.mock.calls[0][0]).toEqual(expect.stringContaining(docsDir));
             expect(writeFile.mock.calls[0][0]).toEqual(expect.stringContaining('.json'));
             expect(writeFile.mock.calls[0][1]).toEqual(expect.stringContaining(stringObjectParamsOnly));
           }
@@ -36,7 +40,7 @@ describe('Document Collection', () => {
       writeFile.mockRejectedValueOnce(saveError);
       expect.assertions(1);
       
-      return documents.save(jsonObject)
+      return documents.save(jsonObjectMayChange)
         .catch(
           err => {
             expect(err).toBe(saveError);
@@ -46,30 +50,30 @@ describe('Document Collection', () => {
   });
 
 
-  describe.skip('Get Function', () => {
+  describe('Get Function', () => {
     it('Gets a file', () => {
       readFile.mockResolvedValue(stringObject);
       
-      return documents.get('1234')
+      return documents.get(testId)
         .then(
           object => {
             delete object.id;
             expect(object).toEqual(jsonObject);
 
             expect(readFile).toHaveBeenCalledTimes(1);
-            expect(readFile).toHaveBeenCalledWith(jsonObject.id + '.json');
+            expect(readFile).toHaveBeenCalledWith(docsDir + '/' + testId + '.json');
           }
         );
     });
-    it.skip('Propagates an error', () => {
-      const saveError = 'save(object) err';
-      writeFile.mockRejectedValueOnce(saveError);
+    it('Propagates an error', () => {
+      const getError = 'get(id) err';
+      readFile.mockRejectedValueOnce(getError);
       expect.assertions(1);
 
-      return documents.save(jsonObject)
+      return documents.get(testId)
         .catch(
           err => {
-            expect(err).toBe(saveError);
+            expect(err).toBe(getError);
           }
         );
     });
