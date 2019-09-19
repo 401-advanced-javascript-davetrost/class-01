@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: Schema.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,56 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: Schema.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* import and use validators */
 
+class Schema {
+  /**
+   * Create a model schema
+   * @param {object} schema - the schema to apply to models
+   */
+  constructor(schema) {
+    this.schema = schema;
+  }
 
-    <h3> </h3>
+  /**
+   * Run validation on the supplied model 
+   * @param {object} model - the model to validate
+   * @throws {ModelError} throws if model does not conform to schema
+   * @returns {object} - validated data record
+   * @function validate
+   */
+  validate(model) {
+    const validator = require('./validator');
+    const ModelError = require('./Errors').ModelError;
 
+    return Object.entries(this.schema).reduce((validModel, [key, type]) => {
+      const modelValue = model[key];
+      if(modelValue !== undefined) {
+        const Caster = validator.getCaster(type);
+        try {
+          validModel[key] = Caster(modelValue);
+        }
+        catch(err) {
+          throw new ModelError('this model is not compliant with the schema');
+        }
+      }
+      return validModel;
+    }, {});
+  }
+}
 
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+module.exports = Schema;</code></pre>
+        </article>
+    </section>
 
 
 
