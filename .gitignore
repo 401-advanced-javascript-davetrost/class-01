@@ -5,6 +5,7 @@ temp
 data
 .env 
 *.env
+document-collection
 
 ### Vim ###
 # swap
