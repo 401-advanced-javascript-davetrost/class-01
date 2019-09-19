@@ -1,7 +1,7 @@
 'use strict';
 
 const validator = require('../lib/validator');
-const {CastError, ModelError} = require('../lib/Errors');
+const CastError = require('../lib/Errors').CastError;
 
 const randomStr = 'yes';
 const trueStr = 'true';
