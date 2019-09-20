@@ -16,6 +16,8 @@ const stringObject = JSON.stringify(jsonObject);
 const stringObjectParamsOnly = stringObject.slice(1, stringObject.length - 1);
 
 const testId = '123456';
+const file1 = 'file1.json';
+const file2 = 'file2.json';
 
 describe('Document Collection', () => {
   describe('Save Function', () => {
@@ -74,6 +76,39 @@ describe('Document Collection', () => {
         .catch(
           err => {
             expect(err).toBe(getError);
+          }
+        );
+    });
+  });
+
+
+  describe('Get All Function', () => {
+    it('Gets all files in a directory', () => {
+      readdir.mockResolvedValue([file1, file2]);
+      readFile.mockClear();
+      readFile.mockResolvedValue(stringObject);
+      
+      return documents.getAll()
+        .then(
+          content => {
+            expect(content[0]).toEqual(jsonObject);
+            expect(content[1]).toEqual(jsonObject);
+
+            expect(readFile).toHaveBeenCalledTimes(2);
+            expect(readFile).toHaveBeenCalledWith(docsDir + '/' + file1);
+            expect(readFile).toHaveBeenCalledWith(docsDir + '/' + file2);
+          }
+        );
+    });
+    it('Propagates an error', () => {
+      const getAllError = 'getAll() err';
+      readdir.mockRejectedValueOnce(getAllError);
+      expect.assertions(1);
+
+      return documents.getAll()
+        .catch(
+          err => {
+            expect(err).toBe(getAllError);
           }
         );
     });
