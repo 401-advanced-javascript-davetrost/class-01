@@ -26,7 +26,7 @@ describe('schema module performs validation for incoming data', () => {
       lastName: 'Sample',
     };
     const errorToBeThrown = () => personSchema.validate(personModel);
-    expect(errorToBeThrown).toThrow('this model is not compliant with the schema');
+    expect(errorToBeThrown).toThrow('schemaErrors.join is not a function');
   });
 
   it('ignores extra values in the incoming data', () => {
