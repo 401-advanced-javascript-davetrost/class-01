@@ -94,6 +94,9 @@ describe('Document Collection', () => {
             expect(content[0]).toEqual(jsonObject);
             expect(content[1]).toEqual(jsonObject);
 
+            expect(readdir).toHaveBeenCalledTimes(1);
+            expect(readdir).toHaveBeenCalledWith(docsDir);
+
             expect(readFile).toHaveBeenCalledTimes(2);
             expect(readFile).toHaveBeenCalledWith(docsDir + '/' + file1);
             expect(readFile).toHaveBeenCalledWith(docsDir + '/' + file2);
