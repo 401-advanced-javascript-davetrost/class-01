@@ -19,7 +19,7 @@ const testId = '123456';
 const file1 = 'file1.json';
 const file2 = 'file2.json';
 
-describe('Document Collection', () => {
+describe.skip('Document Collection', () => {
   describe('Save Function', () => {
     it('Saves a file', () => {
       writeFile.mockResolvedValue(true);
