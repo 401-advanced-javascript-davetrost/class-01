@@ -1,4 +1,4 @@
-const Schema = require('../lib/Schema');
+const Schema = require('../lib/Schema-simple');
 
 describe('schema module performs validation for incoming data', () => {
 
