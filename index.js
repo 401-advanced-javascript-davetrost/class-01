@@ -1,44 +1,45 @@
-const DocumentCollection = require('./lib/document-collection');
-const documents = new DocumentCollection('./document-collection');
+const { personSchema, personModelBad, personModelGood, personModelWithOtherStuff } = require('./models/person-models');
+const { Model } = require('./lib/model');
+const { Database } = require('./lib/database');
 
-let jsonObject = { 'name':'Josh', 'age':36, 'hair':true };
-documents.save(jsonObject)
-  .then(object => {
-    console.log('save( object ) =', object);
-    return object;
-  })
-  .catch(err => {
-    console.log('caught error:', err);
-  });
 
-jsonObject = { 'name':'Joey', 'age':46, 'goofy':true };
-documents.save(jsonObject)
-  .then(object => {
-    console.log('save( object ) =', object);
-    return object;
-  })
-  .then(object => {
-    return documents.get(object.id)
-      .then(content => {
-        console.log('get(', object.id, ') = ', content);
-        return content;
-      })
-      .catch(err => {
-        console.log(err);
+Database.connect('./db')
+  .then(() => {
+    const People = new Model('person', personSchema);
+    People.create(personModelGood)
+      .then(created => {
+        console.log(created);
       });
-  })
-  .catch(err => {
-    console.log(err);
+    People.create(personModelWithOtherStuff)
+      .then(created => {
+        console.log(created);
+      });
+    People.find()
+      .then(data => {
+        console.log('**************************');
+        console.log('ALL DATA IS PRINTED HERE:');
+        console.log('**************************');
+        console.log(data);
+      });
+    
   });
 
 
-documents.getAll()
-  .then(content => {
-    console.log('readdir() =', content);
-  })
-  .catch(err => {
-    console.log(err);
-  });
 
 
+// Database.connect('./db')
+//   .then(() => {
+//     const People2 = new Model('person', personSchema);
+//     People2.create(personModelBad)
+//       .then(created => {
+//         console.log(created);
+//       });
+//   })
+//   .then(() => {
+//     const People1 = new Model('person', personSchema);
+//     People1.find()
+//       .then(alldata => {
+//         console.log(alldata);
+//       });
+//   });
 
