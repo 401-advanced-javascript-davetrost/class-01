@@ -19,9 +19,9 @@ describe('Model', () => {
 
   // arrange
   const schemaConfig = {
-    // doesn't actually mater as long as passed to schema:
+    // doesn't actually matter as long as passed to schema:
     name: {
-      type: String,
+      type: 'string',
       required: true,
     },
   };

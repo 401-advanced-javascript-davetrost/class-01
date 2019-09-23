@@ -4,7 +4,7 @@ jest.mock('../lib/files', () => {
   };
 });
 
-const Database = require('../lib/database');
+const { Database } = require('../lib/database');
 const DocumentCollection = require('../lib/document-collection');
 
 // for setting up mock expectations
