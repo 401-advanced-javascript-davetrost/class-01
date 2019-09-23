@@ -53,10 +53,10 @@ describe('Database', () => {
         const mkdirpCalls = mkdirp.mock.calls;
         expect(mkdirpCalls.length).toBe(2); 
         expect(mkdirpCalls[0][0]).toBe(dbPath);
-        expect(mkdirpCalls[1][0]).toBe('dbpath\\test');
+        expect(mkdirpCalls[1][0]).toBe('dbpath/test');
 
         expect(collection).toBeInstanceOf(DocumentCollection);
-        expect(collection.folder).toBe('dbpath\\test');
+        expect(collection.folder).toBe('dbpath/test');
         expect(Database.collections.test).toBe(collection);
 
         return Database.getCollection('test')
