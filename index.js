@@ -1,6 +1,6 @@
 const { personSchema, personModelBad, personModelGood, personModelWithOtherStuff } = require('./models/person-models');
 const { Model } = require('./lib/model');
-const { Database } = require('./lib/database');
+const Database = require('./lib/database');
 
 
 Database.connect('./db')
@@ -22,7 +22,8 @@ Database.connect('./db')
         console.log(data);
       });
     
-  });
+  })
+  .finally(() => Database.close());
 
 
 
@@ -33,6 +34,9 @@ Database.connect('./db')
 //     People2.create(personModelBad)
 //       .then(created => {
 //         console.log(created);
+//       })
+//       .catch((err) => {
+//         console.log(err);
 //       });
 //   })
 //   .then(() => {
@@ -41,5 +45,6 @@ Database.connect('./db')
 //       .then(alldata => {
 //         console.log(alldata);
 //       });
-//   });
+//   })
+//   .finally(() => Database.close());
 

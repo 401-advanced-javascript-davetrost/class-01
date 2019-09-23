@@ -7,7 +7,7 @@ jest.mock('../lib/database', () => {
 // theAutomaticMock.mock.instances[index].methodName.mock.calls.
 jest.mock('../lib/document-collection');
 
-const Model = require('../lib/model');
+const { Model } = require('../lib/model');
 const Schema = require('../lib/schema');
 const { getCollection } = require('../lib/database');
 const DocumentCollection = require('../lib/document-collection');
